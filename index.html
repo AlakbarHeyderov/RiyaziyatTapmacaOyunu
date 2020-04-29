@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      background-color: black;
+      color: blanchedalmond;
+    }
+    #game{
+      width: 500px;
+      height: 350px;
+      background-color: brown;
+      text-align: center;
+      margin: 20px auto;
+      padding: 30px;
+    }
+    span{
+      font-size: 30px;
+
+    }
+    #dogru,#yanlis{
+      display: inline-block;
+      font-size: 150%;
+      margin: 10px;
+      padding: 10px;
+    }
+    #True{
+      font-size: 40px;
+      width: 40px;
+      height: 45px;
+      margin: 10px;
+      padding: 5px;
+      background-color: rgb(90, 136, 44);
+      display: inline-block;
+    }
+    #False{
+      font-size: 40px;
+      width: 40px;
+      height: 45px;
+      background-color: darkgoldenrod;
+      padding: 5px;
+      display: inline-block;
+    }
+  </style>
+
+</head>
+<body>
+  <div id="game">
+    <h1>Riyaziat Oyunu Cavabi tap</h1>
+    <span id="Number1">0</span>
+    <span id="Operator">0</span>
+    <span id="Number2">0</span>
+    <span>=</span>
+    <input type="text" name="" id="result">
+    <input type="button" id="answer" value="Cavab">
+    <div style="clear: both;"></div>
+    <div id="True">0</div>
+    <div id="False">0</div>
+    <div style="clear: both;"></div>
+  </div>
+  
+
+<script>
+  var Number1 = document.getElementById('Number1');
+  var Number2 = document.getElementById('Number2');
+  var Operator = document.getElementById('Operator');
+  var result = document.getElementById('result');
+  var answer = document.getElementById('answer');
+  var True = document.getElementById('True');
+  var False = document.getElementById('False');
+
+  //Tesadufu reqem
+  function RandomNumber(min,max){
+    var number = Math.floor(Math.random()*(max-min)+min);
+    return number;
+  }
+
+// Emellerin secilmesi, Nomrelerin teyini, Bome meselesinin problemsiz islemesi Functionu.
+
+function newQuestion(){
+  var operation = ['+','-','*','/'];
+  Operator.textContent = operation[RandomNumber(0,4)];
+  Number1.textContent = RandomNumber(0,20);
+  Number2.textContent = RandomNumber(0,20);
+
+  //bolme emelinin duzgun islemesi ucun if.
+  if(Operator.textContent == '/'){
+    while(true){
+      Number2.textContent = RandomNumber(0,20);
+      if(Number1.textContent%Number2.textContent==0){
+        break;
+      }
+    }
+  }
+
+}
+// sehife yenilendiyinde oyunun baslanmasi ucun
+window.onload = function(){
+  newQuestion();
+}
+// cavab buttonu na basilandan sonraki hereketler.
+
+answer.onclick = function(){
+  var ans, n1, n2;
+  n1 = Number(Number1.textContent);
+  n2 = Number(Number2.textContent);
+  switch( Operator.textContent){
+    case '+': ans= n1+n2;break;
+    case '-': ans= n1-n2;break;
+    case '*': ans= n1*n2;break;
+    case '/': ans= n1/n2;break;
+    default: break;
+  }
+  if(result.value == ans){
+    True.textContent = Number(True.textContent)+1;
+  }else{
+    False.textContent = Number(False.textContent)+1;
+  }
+  newQuestion();
+}
+
+</script>
+  <script src="main.js"></script>
+ 
+</body>
+</html>
